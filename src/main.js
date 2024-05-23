@@ -1,6 +1,6 @@
 import { fetchImages } from './js/pixabay-api.js';
 import {
-  renderImages,
+  createImageCard,
   showNotification,
   showLoadingIndicator,
   hideLoadingIndicator,
@@ -34,11 +34,11 @@ searchForm.addEventListener('submit', event => {
         return;
       }
 
-      renderImages(images);
+      gallery.innerHTML = createImageCard(images);
     })
     .catch(error => {
       hideLoadingIndicator();
       showNotification('Something went wrong. Please try again later.');
     });
-  searchInput.value = '';
+  event.target.reset();
 });

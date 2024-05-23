@@ -3,18 +3,11 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-let lightbox;
-
-export function renderImages(images) {
-  const gallery = document.querySelector('.gallery');
-  gallery.innerHTML = images.map(image => createImageCard(image)).join('');
-
-  if (lightbox) {
-    lightbox.refresh();
-  } else {
-    lightbox = new SimpleLightbox('.gallery a');
-  }
-}
+const gallery = document.querySelector('.gallery');
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionsDelay: 250,
+});
 
 export function showNotification(message) {
   iziToast.error({
@@ -38,8 +31,10 @@ export function hideLoadingIndicator() {
   }
 }
 
-function createImageCard(image) {
-  return `
+export function createImageCard(arr) {
+  return arr
+    .map(image => {
+      return `
     <li class="card-item">
       <a href="${image.largeImageURL}" class="photo-card">
         <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
@@ -64,4 +59,6 @@ function createImageCard(image) {
       </a>
     </li>
   `;
+    })
+    .join('');
 }
