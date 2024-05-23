@@ -5,7 +5,13 @@ import {
   showLoadingIndicator,
   hideLoadingIndicator,
 } from './js/render-functions.js';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionsDelay: 250,
+});
 const searchForm = document.querySelector('#search-form');
 const searchInput = document.querySelector('input[name="searchQuery"]');
 const gallery = document.querySelector('.gallery');
@@ -35,6 +41,7 @@ searchForm.addEventListener('submit', event => {
       }
 
       gallery.innerHTML = createImageCard(images);
+      lightbox.refresh();
     })
     .catch(error => {
       hideLoadingIndicator();
